@@ -1,5 +1,8 @@
+- name: Tag Docker image for MicroK8s
+  shell: docker tag flaskapp:latest localhost/flaskapp:latest
+
 - name: Save Docker image to tar
-  shell: docker save flaskapp:latest -o /tmp/flaskapp.tar
+  shell: docker save localhost/flaskapp:latest -o /tmp/flaskapp.tar
 
 - name: Import image into MicroK8s containerd
   shell: microk8s ctr image import /tmp/flaskapp.tar
@@ -23,7 +26,7 @@
         spec:
           containers:
           - name: flaskapp
-            image: flaskapp:latest
+            image: localhost/flaskapp:latest
             ports:
             - containerPort: 5000
     ---
