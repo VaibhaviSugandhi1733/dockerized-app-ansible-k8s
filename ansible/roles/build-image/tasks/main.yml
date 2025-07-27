@@ -1,0 +1,7 @@
+- name: Build the Docker image
+  community.docker.docker_image:
+    build:
+      path: "{{ playbook_dir }}/../app"
+    name: flaskapp
+    tag: latest
+    source: build

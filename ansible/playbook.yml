@@ -1,8 +1,10 @@
-- name: Build Docker image and deploy to Kubernetes
-  hosts: localhost
-  connection: local
-  vars:
-    image_name: flask-webapp
-    image_tag: latest
-  roles:
-    - webapp
+- hosts: localhost
+  become: false
+  tasks:
+    - name: Build Docker Image
+      include_role:
+        name: build-image
+
+    - name: Deploy to Kubernetes
+      include_role:
+        name: deploy-k8s
