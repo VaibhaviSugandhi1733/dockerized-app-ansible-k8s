@@ -1,0 +1,27 @@
+<<<<<<< HEAD
+- name: Build Docker image using shell
+  shell: docker build -t flask-webapp {{ playbook_dir }}/../webapp
+=======
+- name: Build Docker image
+  community.docker.docker_image:
+    name: "{{ image_name }}"
+    tag: "{{ image_tag }}"
+    build:
+      path: "{{ playbook_dir }}/../webapp"
+>>>>>>> 7ecc758 (updated)
+
+- name: Save Docker image to tar
+  shell: docker save {{ image_name }}:{{ image_tag }} -o /tmp/{{ image_name }}.tar
+
+- name: Import image into MicroK8s containerd
+  shell: microk8s ctr image import /tmp/{{ image_name }}.tar
+
+- name: Apply K8s Deployment
+  kubernetes.core.k8s:
+    state: present
+<<<<<<< HEAD
+    definition: "{{ lookup('template', 'templates/deployment.yaml.j2') }}"
+
+=======
+    definition: "{{ lookup('template', 'templates/deployment.yaml.j2') }}"
+>>>>>>> 7ecc758 (updated)
